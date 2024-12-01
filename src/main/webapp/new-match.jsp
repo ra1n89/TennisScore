@@ -20,13 +20,15 @@
         <input name="firstPlayerName">
     </label>
     <br>
+    <br>
     <label>
         Second player name:
         <input name="secondPlayerName">
     </label>
     <br>
+    <br>
     <label>
-        <input type="submit">Save
+        <input type="submit" value="Начать">
     </label>
 </form>
 </body>
