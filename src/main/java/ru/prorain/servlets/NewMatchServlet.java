@@ -12,6 +12,14 @@ import java.io.IOException;
 public class NewMatchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().println("sdasdsa");
+        resp.getWriter().println("doGet");
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String firstPlayerName = req.getParameter("firstPlayerName");
+        String secondPlayerName = req.getParameter("secondPlayerName");
+
     }
 }
