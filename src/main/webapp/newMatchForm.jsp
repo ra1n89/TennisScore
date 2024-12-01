@@ -17,13 +17,13 @@
 <form method="post" action="new-match">
     <label>
         First player name:
-        <input name="firstPlayerName">
+        <input name="firstPlayerName" required>
     </label>
     <br>
     <br>
     <label>
         Second player name:
-        <input name="secondPlayerName">
+        <input name="secondPlayerName" required>
     </label>
     <br>
     <br>
