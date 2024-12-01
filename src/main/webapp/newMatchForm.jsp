@@ -14,7 +14,7 @@
 <br/>
 <br/>
 <br/>
-<form  action = "new-match">
+<form method="post" action="new-match">
     <label>
         First player name:
         <input name="firstPlayerName">
