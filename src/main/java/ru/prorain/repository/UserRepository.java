@@ -12,7 +12,10 @@ import java.util.Collection;
 public class UserRepository implements CrudRepository<User, Integer>{
     SessionFactory sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(User.class).buildSessionFactory();
 
-    public UserRepository(){
+    private static final UserRepository USER_REPOSITORY = new UserRepository();
+
+
+    private UserRepository(){
         String sql = """
         CREATE TABLE Players (
             id INT PRIMARY KEY AUTO_INCREMENT,
@@ -62,5 +65,9 @@ public class UserRepository implements CrudRepository<User, Integer>{
         currentSession.getTransaction().commit();
         System.out.println(user);
         return null;
+    }
+
+    public static UserRepository getInstance(){
+        return USER_REPOSITORY;
     }
 }

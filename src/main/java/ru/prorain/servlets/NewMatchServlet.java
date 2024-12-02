@@ -7,13 +7,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.prorain.entity.User;
 import ru.prorain.repository.UserRepository;
+import ru.prorain.service.UserService;
 
 import java.io.IOException;
 
 @WebServlet("/new-match")
 public class NewMatchServlet extends HttpServlet {
 
-    UserRepository userRepository = new UserRepository();
+    UserService userService = UserService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.getWriter().println("doGet");
@@ -24,7 +26,7 @@ public class NewMatchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String firstPlayerName = req.getParameter("firstPlayerName");
         String secondPlayerName = req.getParameter("secondPlayerName");
-        userRepository.save(new User(firstPlayerName));
+        userService.save(new User(firstPlayerName));
 
 
     }
