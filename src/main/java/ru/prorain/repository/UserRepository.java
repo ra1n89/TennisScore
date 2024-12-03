@@ -1,10 +1,13 @@
 package ru.prorain.repository;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.NativeQuery;
 import ru.prorain.entity.User;
+import ru.prorain.exception.DatabaseException;
+import ru.prorain.exception.EntiteExistingException;
 import ru.prorain.utils.ConnectionManager;
 
 import java.util.Collection;
@@ -20,15 +23,21 @@ public class UserRepository implements CrudRepository<User, Integer>{
     }
 
     @Override
-    public User save(User t) {
+    public User save(User user) {
 
-        Session currentSession = sessionFactory.getCurrentSession();
+        try {
+            Session currentSession = sessionFactory.getCurrentSession();
 
-        currentSession.beginTransaction();
-        currentSession.persist(new User("Anton"));
-        currentSession.getTransaction().commit();
+            currentSession.beginTransaction();
+            currentSession.persist(user);
+            currentSession.getTransaction().commit();
+        } catch (HibernateException e) {
+            if(e.getMessage().contains("Unique index or primary key violation")){
+                throw new EntiteExistingException("PLayer with name: " + user.getName() + " already exists");
+            };
+            throw new DatabaseException("Failed to save player with name: " + user + "in database");
+        }
 
-        getOne();
         return null;
     }
 
