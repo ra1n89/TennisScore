@@ -1,7 +1,5 @@
 package ru.prorain.service;
 
-import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
 import ru.prorain.entity.User;
 import ru.prorain.repository.CrudRepository;
 import ru.prorain.repository.UserRepository;
@@ -18,8 +16,8 @@ public class UserService {
 
     }
 
-    public User save(User id) {
-        crudRepository.save(id);
+    public User save(User user) {
+        crudRepository.save(user);
         return null;
     }
 

@@ -20,7 +20,7 @@ public class UserRepository implements CrudRepository<User, Integer>{
     }
 
     @Override
-    public User save(User id) {
+    public User save(User t) {
 
         Session currentSession = sessionFactory.getCurrentSession();
 
@@ -33,7 +33,7 @@ public class UserRepository implements CrudRepository<User, Integer>{
     }
 
     @Override
-    public User update(User id) {
+    public User update(User t) {
         return null;
     }
 

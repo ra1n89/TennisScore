@@ -27,6 +27,7 @@ public class NewMatchServlet extends HttpServlet {
         String firstPlayerName = req.getParameter("firstPlayerName");
         String secondPlayerName = req.getParameter("secondPlayerName");
         userService.save(new User(firstPlayerName));
+        userService.save(new User(secondPlayerName));
 
 
     }

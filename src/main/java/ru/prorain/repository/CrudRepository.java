@@ -3,9 +3,9 @@ package ru.prorain.repository;
 import java.util.Collection;
 
 public interface CrudRepository<T,K> {
-    T save(T id);
+    T save(T t);
 
-    T update(T id);
+    T update(T t);
 
     Collection<T> getAll();
 

@@ -12,10 +12,13 @@ import lombok.NoArgsConstructor;
 
 @Table(name = "Players")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
+
     String name;
+
     // Конструктор с одним аргументом
     public User(String name) {
         this.id = null;
