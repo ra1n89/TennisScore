@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    int player1;
-    int player2;
-    int winner;
+    private int id;
+    private int player1;
+    private int player2;
+    private int winner;
 
     //конструктор без одного аргумента - id
     public Match(int player1, int player2, int winner) {

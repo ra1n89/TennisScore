@@ -15,9 +15,9 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Integer id;
 
-    String name;
+    private String name;
 
     // Конструктор с одним аргументом
     public User(String name) {
