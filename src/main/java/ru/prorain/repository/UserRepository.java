@@ -5,16 +5,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.NativeQuery;
+import org.slf4j.LoggerFactory;
 import ru.prorain.entity.User;
 import ru.prorain.exception.DatabaseException;
 import ru.prorain.exception.EntiteExistingException;
 import ru.prorain.utils.ConnectionManager;
 
 import java.util.Collection;
+import org.slf4j.Logger;
 
 
 public class UserRepository implements CrudRepository<User, Integer>{
 
+    Logger logger = LoggerFactory.getLogger(UserRepository.class);
     SessionFactory sessionFactory = ConnectionManager.getSessionFactory();
 
     private static final UserRepository USER_REPOSITORY = new UserRepository();
