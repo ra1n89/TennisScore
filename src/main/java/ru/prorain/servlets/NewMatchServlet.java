@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ru.prorain.entity.Match;
+import ru.prorain.dto.MatchDto;
 import ru.prorain.entity.User;
 import ru.prorain.repository.UserRepository;
 import ru.prorain.service.UserService;
@@ -26,8 +28,7 @@ public class NewMatchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String firstPlayerName = req.getParameter("firstPlayerName");
         String secondPlayerName = req.getParameter("secondPlayerName");
-        userService.save(new User(firstPlayerName), new User(secondPlayerName));
-
-
+        MatchDto matchDto = userService.save(new User(firstPlayerName), new User(secondPlayerName));
+        resp.sendRedirect("/match-score?uuid=" + matchDto.getId());
     }
 }
