@@ -16,8 +16,17 @@ public class UserService {
 
     }
 
-    public User save(User user) {
-        crudRepository.save(user);
+    public User save(User firstPlayer, User secondPlayer) {
+        try {
+            crudRepository.save(firstPlayer);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+        try {
+            crudRepository.save(secondPlayer);
+        } catch (Exception e) {
+            e.getMessage();
+        }
         return null;
     }
 

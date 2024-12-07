@@ -26,8 +26,7 @@ public class NewMatchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String firstPlayerName = req.getParameter("firstPlayerName");
         String secondPlayerName = req.getParameter("secondPlayerName");
-        userService.save(new User(firstPlayerName));
-        userService.save(new User(secondPlayerName));
+        userService.save(new User(firstPlayerName), new User(secondPlayerName));
 
 
     }
