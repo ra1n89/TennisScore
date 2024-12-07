@@ -22,22 +22,22 @@
     %>
     <tr>
         <td>Player 1</td>
-        <td><%= matchDto.getPlayer1() %></td>
+        <td><%= matchDto.getPlayer1().getName() %></td>
         <td><%= matchDto.getScore1() %></td>
         <td>
             <form action="<%= request.getContextPath() %>/match-score" method="post">
-                <input type="hidden" name="id" value=<%=matchDto.getPlayer1()%>>
+                <input type="hidden" name="id" value=<%=matchDto.getPlayer1().getId()%>>
                 <button type="submit">Score</button>
             </form>
         </td>
     </tr>
     <tr>
         <td>Player 2</td>
-        <td><%= matchDto.getPlayer2() %></td>
+        <td><%= matchDto.getPlayer2().getName() %></td>
         <td><%= matchDto.getScore2() %></td>
         <td>
             <form action="<%= request.getContextPath() %>/match-score" method="post">
-                <input type="hidden" name="id" value=<%=matchDto.getPlayer2()%>>
+                <input type="hidden" name="id" value=<%=matchDto.getPlayer2().getId()%>>
                 <button type="submit">Score</button>
             </form>
         </td>

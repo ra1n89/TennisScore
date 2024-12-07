@@ -29,7 +29,7 @@ public class UserService {
             firstPlayerWithId = crudRepository.save(firstPlayer);
             secondPlayerWithId = crudRepository.save(secondPlayer);
 
-        MatchDto match = new MatchDto(firstPlayerWithId.getId(), secondPlayerWithId.getId(),0,0 );
+        MatchDto match = new MatchDto(firstPlayerWithId, secondPlayerWithId,0,0 );
         concurrentHashMap.put(match.getId(), match);
         return match;
     }

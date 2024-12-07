@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.prorain.entity.User;
 
 import java.util.UUID;
 
@@ -18,12 +19,12 @@ public class MatchDto {
 
 
     UUID id;
-    int player1;
-    int player2;
+    User player1;
+    User player2;
     int score1;
     int score2;
 
-    public MatchDto(int player1, int player2, int score1, int score2) {
+    public MatchDto(User player1, User player2, int score1, int score2) {
         id = UUID.randomUUID();
         this.player1 = player1;
         this.player2 = player2;
