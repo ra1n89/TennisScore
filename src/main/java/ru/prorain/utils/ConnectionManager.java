@@ -1,9 +1,11 @@
 package ru.prorain.utils;
 import lombok.Getter;
+import lombok.experimental.UtilityClass;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import ru.prorain.entity.User;
 
+@UtilityClass
 public class ConnectionManager {
 
     @Getter
