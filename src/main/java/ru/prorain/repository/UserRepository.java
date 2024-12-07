@@ -15,7 +15,7 @@ import java.util.Collection;
 import org.slf4j.Logger;
 
 
-public class UserRepository implements CrudRepository<User, Integer>{
+public class UserRepository implements CrudRepository<User, Integer>  {
 
     Logger logger = LoggerFactory.getLogger(UserRepository.class);
     SessionFactory sessionFactory = ConnectionManager.getSessionFactory();
@@ -28,10 +28,18 @@ public class UserRepository implements CrudRepository<User, Integer>{
     @Override
     public User save(User user) {
 
-        try {
-            Session currentSession = sessionFactory.getCurrentSession();
+        try (Session currentSession = sessionFactory.getCurrentSession()) {
+
 
             currentSession.beginTransaction();
+
+            User existingUser = currentSession.createQuery("FROM User WHERE name = :name", User.class)
+                    .setParameter("name", user.getName())
+                    .uniqueResult();
+            if (existingUser != null) {
+                return existingUser;
+            }
+
             currentSession.persist(user);
             currentSession.getTransaction().commit();
         } catch (HibernateException e) {
@@ -40,8 +48,8 @@ public class UserRepository implements CrudRepository<User, Integer>{
             };
             throw new DatabaseException("Failed to save player with name: " + user + "in database");
         }
-
-        return null;
+        getOne();
+        return user;
     }
 
     @Override
