@@ -11,9 +11,11 @@
     <title>Title</title>
 </head>
 <body>
-<table>
+<table border="1">
     <tr>
         <th>Player</th>
+        <th>Sets</th>
+        <th>Games</th>
         <th>Points</th>
         <th></th>
     </tr>
@@ -21,23 +23,27 @@
         MatchDto matchDto = (MatchDto) request.getAttribute("match");
     %>
     <tr>
-        <td>Player 1</td>
         <td><%= matchDto.getPlayer1().getName() %></td>
+        <td><%= matchDto.getSets1() %></td>
+        <td><%= matchDto.getGame1() %></td>
         <td><%= matchDto.getScore1() %></td>
         <td>
             <form action="<%= request.getContextPath() %>/match-score" method="post">
                 <input type="hidden" name="id" value=<%=matchDto.getPlayer1().getId()%>>
+                <input type="hidden" name="uuid" value=<%=matchDto.getId()%>>
                 <button type="submit">Score</button>
             </form>
         </td>
     </tr>
     <tr>
-        <td>Player 2</td>
         <td><%= matchDto.getPlayer2().getName() %></td>
+        <td><%= matchDto.getSets2() %></td>
+        <td><%= matchDto.getGame2() %></td>
         <td><%= matchDto.getScore2() %></td>
         <td>
             <form action="<%= request.getContextPath() %>/match-score" method="post">
                 <input type="hidden" name="id" value=<%=matchDto.getPlayer2().getId()%>>
+                <input type="hidden" name="uuid" value=<%=matchDto.getId()%>>
                 <button type="submit">Score</button>
             </form>
         </td>

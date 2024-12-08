@@ -6,8 +6,6 @@ import ru.prorain.repository.CrudRepository;
 import ru.prorain.repository.UserRepository;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -15,7 +13,7 @@ import java.util.concurrent.ConcurrentMap;
 public class UserService {
 
     private static final UserService USER_SERVICE = new UserService();
-    CrudRepository<User, Integer> crudRepository = UserRepository.getInstance();
+    CrudRepository<User, Integer> userRepository = UserRepository.getInstance();
     ConcurrentMap<UUID, MatchDto> concurrentHashMap = new ConcurrentHashMap<>();
 
     private UserService() {
@@ -26,10 +24,10 @@ public class UserService {
         User firstPlayerWithId;
         User secondPlayerWithId;
 
-            firstPlayerWithId = crudRepository.save(firstPlayer);
-            secondPlayerWithId = crudRepository.save(secondPlayer);
+            firstPlayerWithId = userRepository.save(firstPlayer);
+            secondPlayerWithId = userRepository.save(secondPlayer);
 
-        MatchDto match = new MatchDto(firstPlayerWithId, secondPlayerWithId,0,0 );
+        MatchDto match = new MatchDto(firstPlayerWithId, secondPlayerWithId, 0, 0, 0, 0, 0, 0);
         concurrentHashMap.put(match.getId(), match);
         return match;
     }
@@ -59,5 +57,11 @@ public class UserService {
 
     public static UserService getInstance() {
         return USER_SERVICE;
+    }
+
+    public void updateScore(int id, UUID uuid) {
+        if(getMatch(uuid).getPlayer1().getId() == id) {
+            getMatch(uuid).setScore1(10);
+        };
     }
 }
