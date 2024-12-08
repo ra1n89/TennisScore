@@ -5,10 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.prorain.entity.Match;
 import ru.prorain.dto.MatchDto;
 import ru.prorain.entity.User;
-import ru.prorain.repository.UserRepository;
 import ru.prorain.service.UserService;
 
 import java.io.IOException;

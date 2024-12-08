@@ -29,6 +29,8 @@ public class MatchScoreController extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         userService.updateScore(id, uuid);
-        System.out.println(id);
+        MatchDto match = userService.getMatch(uuid);
+        req.setAttribute("match", match);
+        req.getRequestDispatcher("match-score.jsp").forward(req, resp);
     }
 }
