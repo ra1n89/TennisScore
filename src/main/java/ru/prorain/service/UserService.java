@@ -59,7 +59,7 @@ public class UserService {
         return USER_SERVICE;
     }
 
-    public int updateScore(int id, UUID uuid) {
+    public void updateScore(int id, UUID uuid) {
         MatchDto match = getMatch(uuid);
         User player1 = match.getPlayer1();
         User player2 = match.getPlayer2();
@@ -68,52 +68,55 @@ public class UserService {
         int game1 = match.getGame1();
         int game2 = match.getGame2();
         int score1= match.getScore1();
-        int score2 = match.getScore1();
+        int score2 = match.getScore2();
 
 
 
         //Подсчёт очков если нет ситуации когда первый игрок этим очком догоняет второго игрока у которого счёт 40 и сравнивается
-        if(player1.getId() == id && (score2 != 40 && score2-score1 != 10)) {
+        if(player1.getId() == id && (score2 < 40 && score2-score1 != 10)) {
             score1 = scoreCount(score1);
             //если счёт обнулился значит игрок 1 выиграл и увеличиваем кол-во сетов
             if (score1 == 0) {
                 game1++;
-                match.setScore1(score1);
+                match.setScore1(0);
+                match.setScore2(0);
                 match.setGame1(game1);
             }
             match.setScore1(score1);
-            return score1;
+            return;
             //Подсчёт очков если нет ситуации когда второй игрок этим очком догоняет первого игрока у которого счёт 40 и сравнивается
-        } else if (player2.getId() == id && (score1 != 40 && score1-score2 != 10)){
+        } else if (player2.getId() == id && (score1 < 40 && score1-score2 != 10)){
             score2 = scoreCount(score2);
-            if (score1 == 0) {
+            if (score2 == 0) {
                 game2++;
-                match.setScore2(score2);
+                match.setScore2(0);
+                match.setScore1(0);
                 match.setGame2(game2);
             }
             match.setScore2(score2);
-            return score2;
+            return;
             //Подсчёт очков в ситуации когда первый игрок этим очком догоняет второго игрока у которого счёт 40 и сравнивается
         } else if (player1.getId() == id && (score2 >= 40)) {
             score1 = scoreCountInBothHaveForthy(score1, score2);
             if (score1 == 0) {
                 game1++;
-                match.setScore1(score1);
+                match.setScore1(0);
+                match.setScore2(0);
                 match.setGame1(game1);
             }
             match.setScore1(score1);
-            return score1;
+            return;
         } else if (player2.getId() == id && (score1 >= 40)) {
             score2 = scoreCountInBothHaveForthy(score2, score1);
             if (score2 == 0) {
                 game2++;
-                match.setScore2(score2);
+                match.setScore2(0);
+                match.setScore1(0);
                 match.setGame2(game2);
             }
             match.setScore2(score2);
-            return score2;
+            return;
         }
-        return 10000;
     }
 
 
