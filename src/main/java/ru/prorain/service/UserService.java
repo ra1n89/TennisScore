@@ -69,52 +69,29 @@ public class UserService {
         int game2 = match.getGame2();
         int score1= match.getScore1();
         int score2 = match.getScore2();
-
+        boolean isPlayerOneWinScore = player1.getId() == id;
+        boolean isPlayerTwoWinScore = player2.getId() == id;
 
 
         //Подсчёт очков если нет ситуации когда первый игрок этим очком догоняет второго игрока у которого счёт 40 и сравнивается
-        if(player1.getId() == id && (score2 < 40 && score2-score1 != 10)) {
+        if(isPlayerOneWinScore && (score2 <= 40 && score1 < 40)) {
             score1 = scoreCount(score1);
             //если счёт обнулился значит игрок 1 выиграл и увеличиваем кол-во сетов
-            if (score1 == 0) {
-                game1++;
-                match.setScore1(0);
-                match.setScore2(0);
-                match.setGame1(game1);
-            }
-            match.setScore1(score1);
+            setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1);
             return;
             //Подсчёт очков если нет ситуации когда второй игрок этим очком догоняет первого игрока у которого счёт 40 и сравнивается
-        } else if (player2.getId() == id && (score1 < 40 && score1-score2 != 10)){
+        } else if (isPlayerTwoWinScore && (score2 < 40 && score1 <= 40)){
             score2 = scoreCount(score2);
-            if (score2 == 0) {
-                game2++;
-                match.setScore2(0);
-                match.setScore1(0);
-                match.setGame2(game2);
-            }
-            match.setScore2(score2);
+            setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
             return;
             //Подсчёт очков в ситуации когда первый игрок этим очком догоняет второго игрока у которого счёт 40 и сравнивается
-        } else if (player1.getId() == id && (score2 >= 40)) {
+        } else if (isPlayerOneWinScore && (score2 >= 40)) {
             score1 = scoreCountInBothHaveForthy(score1, score2);
-            if (score1 == 0) {
-                game1++;
-                match.setScore1(0);
-                match.setScore2(0);
-                match.setGame1(game1);
-            }
-            match.setScore1(score1);
+            setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1);
             return;
-        } else if (player2.getId() == id && (score1 >= 40)) {
+        } else if (isPlayerTwoWinScore && (score1 >= 40)) {
             score2 = scoreCountInBothHaveForthy(score2, score1);
-            if (score2 == 0) {
-                game2++;
-                match.setScore2(0);
-                match.setScore1(0);
-                match.setGame2(game2);
-            }
-            match.setScore2(score2);
+            setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
             return;
         }
     }
@@ -140,5 +117,26 @@ public class UserService {
             return score1;
         }
         return score1;
+    }
+
+    private void setScoreAndGamesAfterCounting(MatchDto match, int score, boolean isPlayerOneWinScore, int game){
+        if (isPlayerOneWinScore){
+            if (score == 0) {
+                game++;
+                match.setScore1(0);
+                match.setScore2(0);
+                match.setGame1(game);
+            }
+            match.setScore1(score);
+        } else {
+            if (score == 0) {
+                game++;
+                match.setScore2(0);
+                match.setScore1(0);
+                match.setGame2(game);
+            }
+            match.setScore2(score);
+        }
+
     }
 }
