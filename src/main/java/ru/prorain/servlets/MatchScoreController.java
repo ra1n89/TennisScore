@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @WebServlet("/match-score/*")
-public class MatchScoreServlet extends HttpServlet {
+public class MatchScoreController extends HttpServlet {
     UserService userService = UserService.getInstance();
 
     @Override
@@ -26,7 +26,9 @@ public class MatchScoreServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
+        int id = Integer.parseInt(req.getParameter("id"));
+        UUID uuid = UUID.fromString(req.getParameter("uuid"));
+        userService.updateScore(id, uuid);
         System.out.println(id);
     }
 }
