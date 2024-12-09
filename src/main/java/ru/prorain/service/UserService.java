@@ -74,34 +74,30 @@ public class UserService {
         boolean isPlayerTwoWinScore = player2.getId() == id;
 
 
-        //Подсчёт очков если нет ситуации когда первый игрок этим очком догоняет второго игрока у которого счёт 40 и сравнивается
-        if (isPlayerOneWinScore && (score2 != 40 && score1 != 40)) {
-            score1 = scoreCount(score1);
-            //если счёт обнулился значит игрок 1 выиграл и увеличиваем кол-во сетов
-            if(game2 <= 6 && game1 < 6) {
-                setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1);
-            }
-            return;
-            //Подсчёт очков если нет ситуации когда второй игрок этим очком догоняет первого игрока у которого счёт 40 и сравнивается
-        } else if (isPlayerTwoWinScore && (score2 != 40 && score1 != 40)) {
-            score2 = scoreCount(score2);
-            if(game1 <= 6 && game2 < 6) {
-                setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
-            }
-            return;
-            //Подсчёт очков в ситуации когда первый игрок этим очком догоняет второго игрока у которого счёт 40 и сравнивается
-        } else if (isPlayerOneWinScore && (score2 >= 40)) {
+            //Подсчёт очков в ситуации ровно (первый игрок выигрывает очко)
+        if (isPlayerOneWinScore && (score1 >= 40 && score2 >= 40)) {
+            //метод подсчёта в ситуации ровно
             score1 = scoreCountInBothHaveForthy(score1, score2);
-            if(game2 <= 6 && game1 < 6) {
-                setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1);
-            }
-            return;
-        } else if (isPlayerTwoWinScore && (score1 >= 40)) {
+            //устанавливаем счёт и геймы в матче
+            setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1, game2);
+
+                   //Подсчёт очков в ситуации ровно (второй игрок выигрывает очко)
+        } else if (isPlayerTwoWinScore && (score1 >= 40 && score2 >= 40)) {
+
             score2 = scoreCountInBothHaveForthy(score2, score1);
-            if(game1 <= 6 && game2 < 6) {
-                setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
-            }
-            return;
+
+            setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
+
+        } else if (isPlayerOneWinScore && (score2 <= 40 && score1 <= 40)) {
+
+            score1 = scoreCount(score1);
+
+            setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1);
+
+        } else if (isPlayerTwoWinScore && (score2 <= 40 && score1 <= 40)) {
+            score2 = scoreCount(score2);
+
+            setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
         }
     }
 
@@ -134,22 +130,22 @@ public class UserService {
         return score1;
     }
 
-    private void setScoreAndGamesAfterCounting(MatchDto match, int score, boolean isPlayerOneWinScore, int game) {
+    private void setScoreAndGamesAfterCounting(MatchDto match, int score, boolean isPlayerOneWinScore, int game1, int game2) {
 
         if (isPlayerOneWinScore) {
             if (score == 0) {
-                game++;
+                game1++;
                 match.setScore1(0);
                 match.setScore2(0);
-                match.setGame1(game);
+                match.setGame1(game1);
             }
             match.setScore1(score);
         } else {
             if (score == 0) {
-                game++;
+                game1++;
                 match.setScore2(0);
                 match.setScore1(0);
-                match.setGame2(game);
+                match.setGame2(game1);
             }
             match.setScore2(score);
         }
