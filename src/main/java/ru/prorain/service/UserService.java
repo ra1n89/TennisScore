@@ -73,8 +73,12 @@ public class UserService {
         boolean isPlayerOneWinScore = player1.getId() == id;
         boolean isPlayerTwoWinScore = player2.getId() == id;
 
-
+        System.out.println(Thread.currentThread().getName());
         //Подсчёт очков в ситуации ровно (первый игрок выигрывает очко)
+        if(match.isFinish()){
+            return;
+        }
+
         if (isPlayerOneWinScore && (score1 >= 40 && score2 >= 40)) {
 
             //метод подсчёта в ситуации ровно
@@ -145,13 +149,15 @@ public class UserService {
                     match.setSets1(set1);
                     if(set1 - set2 == 2){
                         System.out.println("Player one win");
-                        //TODO
+                        match.setIsFinish();
+                        return;
                     }
                 } else {
                     match.setGame1(game1);
                 }
             }
             match.setScore1(score);
+
         } else {
             if (score == 0) {
                 game1++;
@@ -163,6 +169,11 @@ public class UserService {
                     match.setGame1(0);
                     match.setGame2(0);
                     match.setSets2(set1);
+                    if(set1 - set2 == 2){
+                        System.out.println("Player two win");
+                        match.setIsFinish();
+                        return;
+                    }
                 } else {
                     match.setGame2(game1);
                 }
