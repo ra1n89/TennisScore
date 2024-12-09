@@ -74,30 +74,31 @@ public class UserService {
         boolean isPlayerTwoWinScore = player2.getId() == id;
 
 
-            //Подсчёт очков в ситуации ровно (первый игрок выигрывает очко)
+        //Подсчёт очков в ситуации ровно (первый игрок выигрывает очко)
         if (isPlayerOneWinScore && (score1 >= 40 && score2 >= 40)) {
+
             //метод подсчёта в ситуации ровно
             score1 = scoreCountInBothHaveForthy(score1, score2);
             //устанавливаем счёт и геймы в матче
-            setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1, game2);
+            setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1, game2, sets1, sets2);
 
-                   //Подсчёт очков в ситуации ровно (второй игрок выигрывает очко)
+            //Подсчёт очков в ситуации ровно (второй игрок выигрывает очко)
         } else if (isPlayerTwoWinScore && (score1 >= 40 && score2 >= 40)) {
 
             score2 = scoreCountInBothHaveForthy(score2, score1);
 
-            setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
+            setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2, game1, sets2, sets1);
 
         } else if (isPlayerOneWinScore && (score2 <= 40 && score1 <= 40)) {
 
             score1 = scoreCount(score1);
 
-            setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1);
+            setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1, game2, sets1, sets2);
 
         } else if (isPlayerTwoWinScore && (score2 <= 40 && score1 <= 40)) {
             score2 = scoreCount(score2);
 
-            setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
+            setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2, game1, sets2, sets1);
         }
     }
 
@@ -130,22 +131,42 @@ public class UserService {
         return score1;
     }
 
-    private void setScoreAndGamesAfterCounting(MatchDto match, int score, boolean isPlayerOneWinScore, int game1, int game2) {
+    private void setScoreAndGamesAfterCounting(MatchDto match, int score, boolean isPlayerOneWinScore, int game1, int game2, int set1, int set2) {
 
         if (isPlayerOneWinScore) {
             if (score == 0) {
                 game1++;
                 match.setScore1(0);
                 match.setScore2(0);
-                match.setGame1(game1);
+                if (game1 >= 6 && game1 - game2 >= 2) {
+                    set1++;
+                    match.setGame1(0);
+                    match.setGame2(0);
+                    match.setSets1(set1);
+                    if(set1 - set2 == 2){
+                        System.out.println("Player one win");
+                        //TODO
+                    }
+                } else {
+                    match.setGame1(game1);
+                }
             }
             match.setScore1(score);
         } else {
             if (score == 0) {
                 game1++;
+
                 match.setScore2(0);
                 match.setScore1(0);
-                match.setGame2(game1);
+                if (game1 >= 6 && game1 - game2 >= 2) {
+                    set1++;
+                    match.setGame1(0);
+                    match.setGame2(0);
+                    match.setSets2(set1);
+                } else {
+                    match.setGame2(game1);
+                }
+
             }
             match.setScore2(score);
         }
