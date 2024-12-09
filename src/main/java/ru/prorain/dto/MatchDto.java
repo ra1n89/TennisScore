@@ -27,6 +27,7 @@ public class MatchDto {
     int score2;
     int game1;
     int game2;
+    boolean isFinish;
 
     public MatchDto(User player1, User player2, int score1, int score2, int sets1, int sets2, int game1, int game2) {
         id = UUID.randomUUID();
@@ -38,5 +39,10 @@ public class MatchDto {
         this.sets2 = sets2;
         this.game1 = game1;
         this.game2 = game2;
+        isFinish = false;
+    }
+
+    public void setIsFinish() {
+        isFinish = true;
     }
 }
