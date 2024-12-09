@@ -24,8 +24,8 @@ public class UserService {
         User firstPlayerWithId;
         User secondPlayerWithId;
 
-            firstPlayerWithId = userRepository.save(firstPlayer);
-            secondPlayerWithId = userRepository.save(secondPlayer);
+        firstPlayerWithId = userRepository.save(firstPlayer);
+        secondPlayerWithId = userRepository.save(secondPlayer);
 
         MatchDto match = new MatchDto(firstPlayerWithId, secondPlayerWithId, 0, 0, 0, 0, 0, 0);
         concurrentHashMap.put(match.getId(), match);
@@ -47,11 +47,12 @@ public class UserService {
         return null;
     }
 
-    public MatchDto getMatch(UUID uuid){
+    public MatchDto getMatch(UUID uuid) {
 
         return concurrentHashMap.get(uuid);
     }
-    public ConcurrentMap<UUID, MatchDto> getList(){
+
+    public ConcurrentMap<UUID, MatchDto> getList() {
         return concurrentHashMap;
     }
 
@@ -67,60 +68,75 @@ public class UserService {
         int sets2 = match.getSets2();
         int game1 = match.getGame1();
         int game2 = match.getGame2();
-        int score1= match.getScore1();
+        int score1 = match.getScore1();
         int score2 = match.getScore2();
         boolean isPlayerOneWinScore = player1.getId() == id;
         boolean isPlayerTwoWinScore = player2.getId() == id;
 
 
         //Подсчёт очков если нет ситуации когда первый игрок этим очком догоняет второго игрока у которого счёт 40 и сравнивается
-        if(isPlayerOneWinScore && (score2 <= 40 && score1 < 40)) {
+        if (isPlayerOneWinScore && (score2 != 40 && score1 != 40)) {
             score1 = scoreCount(score1);
             //если счёт обнулился значит игрок 1 выиграл и увеличиваем кол-во сетов
-            setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1);
+            if(game2 <= 6 && game1 < 6) {
+                setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1);
+            }
             return;
             //Подсчёт очков если нет ситуации когда второй игрок этим очком догоняет первого игрока у которого счёт 40 и сравнивается
-        } else if (isPlayerTwoWinScore && (score2 < 40 && score1 <= 40)){
+        } else if (isPlayerTwoWinScore && (score2 != 40 && score1 != 40)) {
             score2 = scoreCount(score2);
-            setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
+            if(game1 <= 6 && game2 < 6) {
+                setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
+            }
             return;
             //Подсчёт очков в ситуации когда первый игрок этим очком догоняет второго игрока у которого счёт 40 и сравнивается
         } else if (isPlayerOneWinScore && (score2 >= 40)) {
             score1 = scoreCountInBothHaveForthy(score1, score2);
-            setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1);
+            if(game2 <= 6 && game1 < 6) {
+                setScoreAndGamesAfterCounting(match, score1, isPlayerOneWinScore, game1);
+            }
             return;
         } else if (isPlayerTwoWinScore && (score1 >= 40)) {
             score2 = scoreCountInBothHaveForthy(score2, score1);
-            setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
+            if(game1 <= 6 && game2 < 6) {
+                setScoreAndGamesAfterCounting(match, score2, isPlayerOneWinScore, game2);
+            }
             return;
         }
     }
 
-
-
-    private int scoreCount(int score){
-        switch(score) {
-            case 0: score = 15; return score;
-            case 15: score = 30; return score;
-            case 30: score = 40; return score;
-            case 40: score = 0; return score;
+    private int scoreCount(int score) {
+        switch (score) {
+            case 0:
+                score = 15;
+                return score;
+            case 15:
+                score = 30;
+                return score;
+            case 30:
+                score = 40;
+                return score;
+            case 40:
+                score = 0;
+                return score;
         }
         return score;
     }
 
     private int scoreCountInBothHaveForthy(int score1, int score2) {
         //увеличиваем счёт догоняющего игрока
-        score1+=10;
+        score1 += 10;
         //считаем если разрыва больше двух игр (20 очков) то обнуляем счёт победившего игрока
-        if (score1-score2 == 20){
-            score1=0;
+        if (score1 - score2 == 20) {
+            score1 = 0;
             return score1;
         }
         return score1;
     }
 
-    private void setScoreAndGamesAfterCounting(MatchDto match, int score, boolean isPlayerOneWinScore, int game){
-        if (isPlayerOneWinScore){
+    private void setScoreAndGamesAfterCounting(MatchDto match, int score, boolean isPlayerOneWinScore, int game) {
+
+        if (isPlayerOneWinScore) {
             if (score == 0) {
                 game++;
                 match.setScore1(0);
