@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
+<a href="/matches"><h4>Matches</h4></a>
 <table border="1">
     <tr>
         <th>Player</th>

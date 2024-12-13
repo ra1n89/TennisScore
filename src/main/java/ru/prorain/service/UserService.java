@@ -1,6 +1,7 @@
 package ru.prorain.service;
 
 import ru.prorain.dto.MatchDto;
+import ru.prorain.entity.Match;
 import ru.prorain.entity.User;
 import ru.prorain.repository.CrudRepository;
 import ru.prorain.repository.UserRepository;
@@ -13,6 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 public class UserService {
 
     private static final UserService USER_SERVICE = new UserService();
+    MatchService matchService = MatchService.getInstance();
     CrudRepository<User, Integer> userRepository = UserRepository.getInstance();
     ConcurrentMap<UUID, MatchDto> concurrentHashMap = new ConcurrentHashMap<>();
 
@@ -150,6 +152,12 @@ public class UserService {
                     if(set1 - set2 == 2){
                         System.out.println("Player one win");
                         match.setIsFinish();
+
+                        matchService.save(new Match(match.getPlayer1().getId(), match.getPlayer2().getId(), match.getPlayer1().getId()));
+                        //concurrentHashMap.remove(match.getId());
+                        //TODO реализовать удаление и рендеринг уже через базу данных
+                        //TODO рендерится окончательный счёт но при обновлении страницы ошибка 500, поправить
+
                         return;
                     }
                 } else {
@@ -172,6 +180,7 @@ public class UserService {
                     if(set1 - set2 == 2){
                         System.out.println("Player two win");
                         match.setIsFinish();
+
                         return;
                     }
                 } else {
