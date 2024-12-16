@@ -33,7 +33,7 @@ public class MatchRepository implements CrudRepository<Match, Integer>{
     }
 
     @Override
-    public Collection<Match> getAll() {
+    public List<Match> getAll() {
         List<Match> list;
         String hqlQuery = "FROM Match";
         try(Session session = sessionFactory.getCurrentSession()){

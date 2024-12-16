@@ -29,7 +29,10 @@ public class ServletListener implements ServletContextListener {
             id INT PRIMARY KEY AUTO_INCREMENT,
             player1 INT,
             player2 INT,
-            winner INT
+            winner INT,
+            FOREIGN KEY (player1) REFERENCES Players(id),
+            FOREIGN KEY (player2) REFERENCES Players(id),
+            FOREIGN KEY (winner) REFERENCES Players(id)
             )
             """;
 

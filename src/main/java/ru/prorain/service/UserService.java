@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 public class UserService {
 
     private static final UserService USER_SERVICE = new UserService();
-    MatchService matchService = MatchService.getInstance();
+    OngoingMatchService matchService = OngoingMatchService.getInstance();
     CrudRepository<User, Integer> userRepository = UserRepository.getInstance();
     ConcurrentMap<UUID, MatchDto> concurrentHashMap = new ConcurrentHashMap<>();
 
@@ -153,7 +153,7 @@ public class UserService {
                         System.out.println("Player one win");
                         match.setIsFinish();
 
-                        matchService.save(new Match(match.getPlayer1().getId(), match.getPlayer2().getId(), match.getPlayer1().getId()));
+                        matchService.save(new Match(match.getPlayer1(), match.getPlayer2(), match.getPlayer1()));
                         //concurrentHashMap.remove(match.getId());
                         //TODO реализовать удаление и рендеринг уже через базу данных
                         //TODO рендерится окончательный счёт но при обновлении страницы ошибка 500, поправить
@@ -180,6 +180,7 @@ public class UserService {
                     if(set1 - set2 == 2){
                         System.out.println("Player two win");
                         match.setIsFinish();
+                        matchService.save(new Match(match.getPlayer1(), match.getPlayer2(), match.getPlayer2()));
 
                         return;
                     }

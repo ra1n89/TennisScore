@@ -14,12 +14,18 @@ public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int player1;
-    private int player2;
-    private int winner;
+    @OneToOne
+    @JoinColumn(name = "player1", referencedColumnName = "id")
+    private User player1;
+    @JoinColumn(name = "player2", referencedColumnName = "id")
+    @OneToOne
+    private User player2;
+    @JoinColumn(name = "winner", referencedColumnName = "id")
+    @OneToOne
+    private User winner;
 
     //конструктор без одного аргумента - id
-    public Match(int player1, int player2, int winner) {
+    public Match(User player1, User player2, User winner) {
         this.player1 = player1;
         this.player2 = player2;
         this.winner = winner;
