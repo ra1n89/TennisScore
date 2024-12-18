@@ -9,19 +9,19 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserServiceTest {
+class MatchScoreCalculationServiceTest {
 
     @Test
     void test(){
         OngoingMatchService matchService = OngoingMatchService.getInstance();
-        UserService userService = UserService.getInstance();
+        MatchScoreCalculationService matchScoreCalculationService = MatchScoreCalculationService.getInstance();
         List<Match> testMatchesList = new ArrayList<>();
         User player1 = new User("Anton");
         User player2 = new User("Petr");
         User player3 = new User("Sergey");
         User player4 = new User("Ivan");
-        userService.save(player1, player2);
-        userService.save(player3, player4);
+        matchScoreCalculationService.save(player1, player2);
+        matchScoreCalculationService.save(player3, player4);
         Match match1 = new Match(player1, player2, player1);
         Match match2 = new Match(player3, player4, player4);
 

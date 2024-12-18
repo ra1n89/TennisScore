@@ -1,26 +1,19 @@
 package ru.prorain.service;
 
-import ru.prorain.dto.MatchDto;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import ru.prorain.entity.Match;
 import ru.prorain.repository.MatchRepository;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
-public class OngoingMatchService {
-
+public class FinishMatchPersistenceService {
 
     MatchRepository matchRepository = MatchRepository.getInstance();
-    static public ConcurrentMap<UUID, MatchDto> concurrentHashMap = new ConcurrentHashMap<>();
-
-    private static final OngoingMatchService MATCH_SERVICE = new OngoingMatchService();
-
-    private OngoingMatchService() {
+    public static final FinishMatchPersistenceService finishMatchPersistenceService = new FinishMatchPersistenceService();
+    private FinishMatchPersistenceService( ) {
 
     }
-
 
     public Match save(Match match) {
         matchRepository.save(match);
@@ -46,10 +39,9 @@ public class OngoingMatchService {
         return null;
     }
 
-      public static OngoingMatchService getInstance() {
-        return MATCH_SERVICE;
+
+    public static FinishMatchPersistenceService getInstance() {
+        return finishMatchPersistenceService;
     }
 
-
 }
-
