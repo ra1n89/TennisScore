@@ -22,7 +22,7 @@ public class MatchScoreCalculationService {
 
     }
 
-    public MatchDto save(User firstPlayer, User secondPlayer) {
+/*    public MatchDto save(User firstPlayer, User secondPlayer) {
         User firstPlayerWithId;
         User secondPlayerWithId;
 
@@ -32,7 +32,7 @@ public class MatchScoreCalculationService {
         MatchDto match = new MatchDto(firstPlayerWithId, secondPlayerWithId, 0, 0, 0, 0, 0, 0);
         OngoingMatchService.concurrentHashMap.put(match.getId(), match);
         return match;
-    }
+    }*/
 
 
     public MatchDto getMatch(UUID uuid) {

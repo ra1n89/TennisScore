@@ -8,13 +8,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.prorain.dto.MatchDto;
 import ru.prorain.entity.User;
 import ru.prorain.service.MatchScoreCalculationService;
+import ru.prorain.service.OngoingMatchService;
 
 import java.io.IOException;
 
 @WebServlet("/new-match")
 public class NewMatchServlet extends HttpServlet {
 
-    MatchScoreCalculationService matchScoreCalculationService = MatchScoreCalculationService.getInstance();
+    OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,7 +27,7 @@ public class NewMatchServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String firstPlayerName = req.getParameter("firstPlayerName");
         String secondPlayerName = req.getParameter("secondPlayerName");
-        MatchDto matchDto = matchScoreCalculationService.save(new User(firstPlayerName), new User(secondPlayerName));
+        MatchDto matchDto = ongoingMatchService.save(new User(firstPlayerName), new User(secondPlayerName));
         resp.sendRedirect("/match-score?uuid=" + matchDto.getId());
     }
 }
