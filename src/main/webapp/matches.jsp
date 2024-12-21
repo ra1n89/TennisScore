@@ -12,6 +12,11 @@
     <title>Title</title>
 </head>
 <body>
+<form method="get" action="matches">
+    <input name = "filter_by_player_name" >
+    <button type="submit"></button>
+</form>
+
 <table border="1">
     <tr>
         <td>Player One</td>
@@ -19,6 +24,7 @@
         <td>Winner</td>
     </tr>
     <% List<Match> matchList = (List<Match>) request.getAttribute("list");
+
     for(Match match: matchList ){
     %>
     <tr>
