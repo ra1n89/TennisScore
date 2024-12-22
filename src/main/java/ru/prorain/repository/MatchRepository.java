@@ -2,6 +2,7 @@ package ru.prorain.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.processing.HQL;
 import org.hibernate.query.Query;
 import ru.prorain.entity.Match;
 import ru.prorain.utils.ConnectionManager;
@@ -9,7 +10,7 @@ import ru.prorain.utils.ConnectionManager;
 import java.util.Collection;
 import java.util.List;
 
-public class MatchRepository implements CrudRepository<Match, Integer>{
+public class MatchRepository implements CrudRepository<Match, Integer>, MatchSpecificOperation{
 
     private static final MatchRepository MATCH_REPOSITORY = new MatchRepository();
 
@@ -56,5 +57,22 @@ public class MatchRepository implements CrudRepository<Match, Integer>{
     public static MatchRepository getInstance() {
 
         return MATCH_REPOSITORY;
+    }
+
+    @Override
+    public List<Match> getFilteredMatchesByPlayerName(String filterByPlayerName) {
+        String HQL = "FROM Match WHERE player1.name =:filterByPlayerName OR player2.name =:filterByPlayerName";
+        try(Session session = sessionFactory.getCurrentSession()){
+            session.beginTransaction();
+            Query query = session.createQuery(HQL);
+            query.setParameter("filterByPlayerName", filterByPlayerName);
+            List<Match> resultList = query.getResultList();
+            session.getTransaction().commit();
+            return resultList;
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    return null;
     }
 }

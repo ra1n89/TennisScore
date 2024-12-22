@@ -44,4 +44,7 @@ public class FinishMatchPersistenceService {
         return finishMatchPersistenceService;
     }
 
+    public List<Match> getFilteredMatchesByPlayerName(String filterByPlayerName) {
+       return matchRepository.getFilteredMatchesByPlayerName(filterByPlayerName);
+    }
 }
