@@ -19,6 +19,7 @@ public class MatchScoreController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UUID uuid = UUID.fromString(req.getParameter("uuid"));
         MatchDto match = matchScoreCalculationService.getMatch(uuid);
+        //TODO: добавить UUID (set attribute?)
         req.setAttribute("match", match);
         req.getRequestDispatcher("match-score.jsp").forward(req, resp);
 
