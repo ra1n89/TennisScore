@@ -47,4 +47,13 @@ public class FinishMatchPersistenceService {
     public List<Match> getFilteredMatchesByPlayerName(String filterByPlayerName) {
        return matchRepository.getFilteredMatchesByPlayerName(filterByPlayerName);
     }
+
+    public List<Match> getFilteredBySize(Long page){
+        int pageInt = page.intValue();
+        return matchRepository.getFilteredBySize(pageInt);
+    }
+
+    public Long getPagesAmount() {
+        return matchRepository.getPagesAmount();
+    }
 }
