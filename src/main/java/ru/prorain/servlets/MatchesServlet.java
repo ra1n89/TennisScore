@@ -25,7 +25,7 @@ public class MatchesServlet extends HttpServlet {
         List<Match> matchList;
         String filterByPlayerName = req.getParameter("filter_by_player_name");
 
-        if (!Objects.equals(filterByPlayerName, "") && filterByPlayerName != null) {
+        if (filterByPlayerName.isEmpty() && filterByPlayerName != null) {
             matchList = matchService.getFilteredMatchesByPlayerName(filterByPlayerName);
         } else {
             matchList = matchService.getAll();

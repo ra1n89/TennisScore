@@ -10,17 +10,19 @@ import ru.prorain.utils.ConnectionManager;
 import java.util.Collection;
 import java.util.List;
 
-public class MatchRepository implements CrudRepository<Match, Integer>, MatchSpecificOperation{
+public class MatchRepository implements CrudRepository<Match, Integer>{
 
     private static final MatchRepository MATCH_REPOSITORY = new MatchRepository();
 
     private MatchRepository() {
     }
 
-    SessionFactory sessionFactory = ConnectionManager.getSessionFactory();
+    static SessionFactory sessionFactory = ConnectionManager.getSessionFactory();
+
     @Override
     public Match save(Match match) {
-        try(Session session = sessionFactory.getCurrentSession()){
+        try(Session session = sessionFactory.getCurrentSession()
+        ){
            session.beginTransaction();
            session.persist(match);
            session.getTransaction().commit();
@@ -59,12 +61,12 @@ public class MatchRepository implements CrudRepository<Match, Integer>, MatchSpe
         return MATCH_REPOSITORY;
     }
 
-    @Override
+
     public List<Match> getFilteredMatchesByPlayerName(String filterByPlayerName) {
-        String HQL = "FROM Match WHERE player1.name =:filterByPlayerName OR player2.name =:filterByPlayerName";
+        String hqlQuery = "FROM Match WHERE player1.name =:filterByPlayerName OR player2.name =:filterByPlayerName";
         try(Session session = sessionFactory.getCurrentSession()){
             session.beginTransaction();
-            Query query = session.createQuery(HQL);
+            Query query = session.createQuery(hqlQuery);
             query.setParameter("filterByPlayerName", filterByPlayerName);
             List<Match> resultList = query.getResultList();
             session.getTransaction().commit();

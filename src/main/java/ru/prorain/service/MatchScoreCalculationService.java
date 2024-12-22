@@ -61,7 +61,6 @@ public class MatchScoreCalculationService {
         boolean isPlayerOneWinScore = player1.getId() == id;
         boolean isPlayerTwoWinScore = player2.getId() == id;
 
-        System.out.println(Thread.currentThread().getName());
         //Подсчёт очков в ситуации ровно (первый игрок выигрывает очко)
         if(match.isFinish()){
             return;

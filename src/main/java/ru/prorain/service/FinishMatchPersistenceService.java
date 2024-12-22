@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FinishMatchPersistenceService {
 
-    MatchRepository matchRepository = MatchRepository.getInstance();
+    private final static MatchRepository matchRepository = MatchRepository.getInstance();
     public static final FinishMatchPersistenceService finishMatchPersistenceService = new FinishMatchPersistenceService();
     private FinishMatchPersistenceService( ) {
 
