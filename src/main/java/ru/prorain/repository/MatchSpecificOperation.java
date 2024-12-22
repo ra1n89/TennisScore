@@ -6,5 +6,9 @@ import java.util.List;
 
 public interface MatchSpecificOperation {
 
-    public List<Match> getFilteredMatchesByPlayerName(String filterByPlayerName);
+    List<Match> getFilteredMatchesByPlayerName(String filterByPlayerName);
+
+    List<Match> getFilteredBySize(int page);
+
+    Long getPagesAmount();
 }
