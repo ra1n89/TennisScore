@@ -33,8 +33,14 @@
         <td><%= match.getWinner().getName()  %></td>
     </tr>
 <%}%>
-
-
 </table>
+<br>
+<% Long pages = (Long) request.getAttribute("pages");
+    Long i = 1L;
+%>
+
+<a href="<%= request.getContextPath() %>/matches?page=<%= i - 1 < 1 ? 1 : i - 1 %>"><</a>
+<a href="<%= request.getContextPath() %>/matches?page=<%= i %>"><%= i %></a>
+<a href="<%= request.getContextPath() %>/matches?page=<%= i + 1 > pages ? i = pages : i + 1 %>">></a>
 </body>
 </html>
