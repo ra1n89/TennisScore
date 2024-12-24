@@ -89,9 +89,6 @@ class MatchScoreCalculationServiceTest {
         for (int i = 0; i <=47; i++) {
             matchScoreCalculationService.updateScore(match.getPlayer1().getId(), match.getId());
             matchScoreCalculationService.updateScore(match.getPlayer2().getId(), match.getId());
-            System.out.println(i + " - " + match.getScore1() + " : " + match.getGame1() + " : " + match.getSets1());
-            System.out.println(i + " - " + match.getScore1() + " : " + match.getGame1() + " : " + match.getSets1());
-
         }
 
         assertAll("Score should be updated correctly when 1st player wins all matches and two sets",
@@ -116,20 +113,14 @@ class MatchScoreCalculationServiceTest {
                 match.setScore1(30);
                 match.setScore2(40);
                 matchScoreCalculationService.updateScore(match.getPlayer2().getId(), match.getId());
-                System.out.println(1 + " - " + match.getScore1() + " : " + match.getGame1() + " : " + match.getSets1());
-                System.out.println(1 + " - " + match.getScore2() + " : " + match.getGame2() + " : " + match.getSets2());
             } else if (match.getGame1() < match.getGame2()){
                 match.setScore1(40);
                 match.setScore2(30);
                 matchScoreCalculationService.updateScore(match.getPlayer1().getId(), match.getId());
-                System.out.println(2 + " - " + match.getScore1() + " : " + match.getGame1() + " : " + match.getSets1());
-                System.out.println(2 + " - " + match.getScore2() + " : " + match.getGame2() + " : " + match.getSets2());
             } else {
-
                 match.setScore1(40);
                 matchScoreCalculationService.updateScore(match.getPlayer1().getId(), match.getId());
-                System.out.println(3 + " - " + match.getScore1() + " : " + match.getGame1() + " : " + match.getSets1());
-                System.out.println(3 + " - " + match.getScore2() + " : " + match.getGame2() + " : " + match.getSets2());
+
             }
 
 
