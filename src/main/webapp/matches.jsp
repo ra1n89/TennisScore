@@ -44,7 +44,7 @@
         <div class="input-container">
             <input class="input-filter" placeholder="Filter by name" type="text" />
             <div>
-                <a href="matches.jsp">
+                <a href="matches">
                     <button class="btn-filter">Reset Filter</button>
                 </a>
             </div>

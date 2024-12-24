@@ -47,8 +47,7 @@ public class MatchesServlet extends HttpServlet {
         }
         req.setAttribute("pages", pages);
         req.setAttribute("list", matchList);
-        req.getRequestDispatcher("/matches.jsp").forward(req, resp);
-
+        req.getRequestDispatcher("matches.jsp").forward(req, resp);
 
     }
 }

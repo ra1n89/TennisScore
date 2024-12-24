@@ -26,8 +26,10 @@ public class MatchRepository implements CrudRepository<Match, Integer>, MatchSpe
             session.beginTransaction();
             session.persist(match);
             session.getTransaction().commit();
+        } catch (HibernateException e) {
+
         }
-        return null;
+        return match;
     }
 
     @Override
